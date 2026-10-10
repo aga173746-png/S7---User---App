@@ -300,21 +300,23 @@ if (currentMode === "login") {
 </style>
 
 <div class="dashboard">
-  <div class="dash-box">
-    <h3>💰 Balance</h3>
-    <p>আপনার ব্যালেন্স</p>
-  </div>
-  <div class="dash-box">
-    <h3>📋 Tasks</h3>
-    <p>কাজের তালিকা</p>
-  </div>
-  <div class="dash-box">
-    <h3>💳 Withdraw</h3>
-    <p>টাকা উত্তোলন</p>
-  </div>
-  <div class="dash-box">
-    <h3>👛 Wallet</h3>
-    <p>আপনার ওয়ালেট</p>
-  </div>
+  <button class="dash-box" onclick="openSection('balance')">
+    💰 Balance
+  </button>
+
+  <button class="dash-box" onclick="openSection('tasks')">
+    📋 Tasks
+  </button>
+
+  <button class="dash-box" onclick="openSection('withdraw')">
+    💳 Withdraw
+  </button>
+
+  <button class="dash-box" onclick="openSection('wallet')">
+    👛 Wallet
+  </button>
+</div>
+
+<div id="sectionContent"></div>
 </div>
 </html>
