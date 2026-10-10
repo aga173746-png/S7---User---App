@@ -256,7 +256,9 @@ document.getElementById("authForm").addEventListener("submit", async function(ev
     });
 
     const data = await response.json();
-
+if (currentMode === "login" && data.token) {
+  localStorage.setItem("s7_token", data.token);
+  }
     if (!response.ok) {
       alert(data.error || "কাজটি সফল হয়নি");
       return;
