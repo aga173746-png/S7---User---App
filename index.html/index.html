@@ -277,4 +277,41 @@ if (currentMode === "login") {
 });
 </script>
 </body>
+  <style>
+.dashboard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 20px;
+}
+.dash-box {
+  background: #075e43;
+  color: white;
+  padding: 20px 10px;
+  border-radius: 12px;
+  text-align: center;
+}
+.dash-box h3 {
+  margin: 0 0 10px;
+}
+</style>
+
+<div class="dashboard">
+  <div class="dash-box">
+    <h3>💰 Balance</h3>
+    <p>আপনার ব্যালেন্স</p>
+  </div>
+  <div class="dash-box">
+    <h3>📋 Tasks</h3>
+    <p>কাজের তালিকা</p>
+  </div>
+  <div class="dash-box">
+    <h3>💳 Withdraw</h3>
+    <p>টাকা উত্তোলন</p>
+  </div>
+  <div class="dash-box">
+    <h3>👛 Wallet</h3>
+    <p>আপনার ওয়ালেট</p>
+  </div>
+</div>
 </html>
