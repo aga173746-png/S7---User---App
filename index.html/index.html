@@ -220,17 +220,7 @@
         isRegister ? "new-password" : "current-password";
     }
 
-    document.getElementById("authForm").addEventListener(
-      "submit",
-      function(event) {
-        event.preventDefault();
-
-        alert(
-          "Login/Register এখনো চালু হয়নি। " +
-          "আসল অ্যাকাউন্টের জন্য Backend সংযোগ করতে হবে।"
-        );
-      }
-    );
+    
 
     function logout() {
       document.getElementById("welcomeCard")
