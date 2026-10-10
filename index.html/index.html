@@ -269,22 +269,9 @@ if (currentMode === "login") {
   document.getElementById("welcomeCard").classList.remove("hidden");
 
   document.getElementById("welcomeMessage").textContent =
-    const balanceResponse = await fetch(
-  API_URL + "/api/user/balance",
-  {
-    headers: {
-      Authorization: "Bearer " + data.token
-    }
-  }
-);
+    
 
-const balanceData = await balanceResponse.json();
 
-if (balanceResponse.ok) {
-  const balanceText = document.createElement("p");
-  balanceText.textContent = "আপনার ব্যালেন্স: ৳" + balanceData.balance;
-  document.getElementById("welcomeCard").appendChild(balanceText);
-  }
     "স্বাগতম, " + (data.user?.name || data.user?.email || "User") + "!";
 }
   } catch (error) {
