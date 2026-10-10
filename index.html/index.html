@@ -262,7 +262,15 @@ document.getElementById("authForm").addEventListener("submit", async function(ev
       return;
     }
 
-    alert(data.message || "সফল হয়েছে!");
+    alert(data.message || "Login successful");
+
+if (currentMode === "login") {
+  document.getElementById("authCard").classList.add("hidden");
+  document.getElementById("welcomeCard").classList.remove("hidden");
+
+  document.getElementById("welcomeMessage").textContent =
+    "স্বাগতম, " + (data.user?.name || data.user?.email || "User") + "!";
+}
   } catch (error) {
     alert("Backend-এর সঙ্গে সংযোগ করা যায়নি");
   }
