@@ -267,43 +267,6 @@ document.getElementById("authForm").addEventListener("submit", async function(ev
     alert("Backend-এর সঙ্গে সংযোগ করা যায়নি");
   }
 });
-<script>
-const API_URL = "https://s7-pay-backend.onrender.com";
-
-document.getElementById("authForm").addEventListener("submit", async function(event) {
-  event.preventDefault();
-
-  const name = document.getElementById("fullName").value.trim();
-  const email = document.getElementById("mobile").value.trim();
-  const password = document.getElementById("password").value;
-
-  const endpoint = currentMode === "register"
-    ? "/api/register"
-    : "/api/user/login";
-
-  try {
-    const response = await fetch(API_URL + endpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(
-        currentMode === "register"
-          ? { name, email, password }
-          : { email, password }
-      )
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      alert(data.error || "কাজটি সফল হয়নি");
-      return;
-    }
-
-    alert(data.message || "সফল হয়েছে!");
-  } catch (error) {
-    alert("Backend-এর সঙ্গে সংযোগ করা যায়নি");
-  }
-});
 </script>
 </body>
 </html>
