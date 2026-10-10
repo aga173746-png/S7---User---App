@@ -3,48 +3,243 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>S7 Pay</title>
+  <title>S7 Pay - User App</title>
+
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       background: #f1f5f9;
-      text-align: center;
+      color: #222;
     }
+
     header {
       background: #075e43;
       color: white;
-      padding: 25px;
+      text-align: center;
+      padding: 25px 15px;
     }
-    .box {
+
+    header h1 {
+      margin: 0 0 10px;
+    }
+
+    .container {
+      max-width: 420px;
+      margin: 25px auto;
+      padding: 15px;
+    }
+
+    .card {
       background: white;
-      margin: 25px 15px;
-      padding: 25px;
+      padding: 25px 20px;
       border-radius: 12px;
+      box-shadow: 0 3px 12px #00000010;
     }
-    button {
+
+    h2 {
+      text-align: center;
+      color: #075e43;
+      margin-top: 0;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .tabs button {
+      flex: 1;
+      background: #e2e8f0;
+      color: #222;
+    }
+
+    .tabs button.active {
       background: #075e43;
       color: white;
-      border: none;
-      padding: 12px 25px;
+    }
+
+    label {
+      display: block;
+      margin: 12px 0 6px;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cbd5e1;
       border-radius: 7px;
       font-size: 16px;
     }
+
+    button {
+      border: none;
+      border-radius: 7px;
+      padding: 12px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .submit-btn {
+      width: 100%;
+      margin-top: 20px;
+      background: #075e43;
+      color: white;
+    }
+
+    .welcome {
+      text-align: center;
+      line-height: 1.7;
+    }
+
+    .notice {
+      margin-top: 15px;
+      font-size: 13px;
+      color: #64748b;
+      text-align: center;
+    }
+
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
+
 <body>
+
   <header>
     <h1>S7 Pay</h1>
     <p>Welcome to S7 Pay</p>
   </header>
 
-  <div class="box">
-    <h2>User App</h2>
-    <p>আপনার S7 Pay অ্যাপে স্বাগতম!</p>
-    <button onclick="alert('S7 Pay User App Ready!')">
-      Get Started
-    </button>
-  </div>
+  <main class="container">
+
+    <section class="card" id="authCard">
+
+      <h2>আপনার অ্যাকাউন্ট</h2>
+
+      <div class="tabs">
+        <button
+          type="button"
+          id="loginTab"
+          class="active"
+          onclick="showForm('login')">
+          Login
+        </button>
+
+        <button
+          type="button"
+          id="registerTab"
+          onclick="showForm('register')">
+          Register
+        </button>
+      </div>
+
+      <form id="authForm">
+
+        <div id="nameField" class="hidden">
+          <label for="fullName">আপনার নাম</label>
+          <input
+            id="fullName"
+            type="text"
+            placeholder="আপনার নাম লিখুন"
+            autocomplete="name">
+        </div>
+
+        <label for="mobile">মোবাইল নম্বর</label>
+        <input
+          id="mobile"
+          type="tel"
+          placeholder="মোবাইল নম্বর লিখুন"
+          autocomplete="tel"
+          required>
+
+        <label for="password">পাসওয়ার্ড</label>
+        <input
+          id="password"
+          type="password"
+          placeholder="পাসওয়ার্ড লিখুন"
+          autocomplete="current-password"
+          required>
+
+        <button class="submit-btn" id="submitBtn" type="submit">
+          Login
+        </button>
+
+      </form>
+
+      <p class="notice">
+        নিরাপদ অ্যাকাউন্ট ব্যবহারের জন্য নিজের তথ্য গোপন রাখুন।
+      </p>
+
+    </section>
+
+    <section class="card welcome hidden" id="welcomeCard">
+      <h2>স্বাগতম!</h2>
+      <p id="welcomeMessage"></p>
+      <p>আসল অ্যাকাউন্ট চালু করতে Backend সংযোগ প্রয়োজন।</p>
+      <button
+        type="button"
+        class="submit-btn"
+        onclick="logout()">
+        Logout
+      </button>
+    </section>
+
+  </main>
+
+  <script>
+    let currentMode = "login";
+
+    function showForm(mode) {
+      currentMode = mode;
+
+      const isRegister = mode === "register";
+
+      document.getElementById("nameField")
+        .classList.toggle("hidden", !isRegister);
+
+      document.getElementById("fullName").required = isRegister;
+
+      document.getElementById("loginTab")
+        .classList.toggle("active", !isRegister);
+
+      document.getElementById("registerTab")
+        .classList.toggle("active", isRegister);
+
+      document.getElementById("submitBtn").textContent =
+        isRegister ? "Register" : "Login";
+
+      document.getElementById("password").autocomplete =
+        isRegister ? "new-password" : "current-password";
+    }
+
+    document.getElementById("authForm").addEventListener(
+      "submit",
+      function(event) {
+        event.preventDefault();
+
+        alert(
+          "Login/Register এখনো চালু হয়নি। " +
+          "আসল অ্যাকাউন্টের জন্য Backend সংযোগ করতে হবে।"
+        );
+      }
+    );
+
+    function logout() {
+      document.getElementById("welcomeCard")
+        .classList.add("hidden");
+
+      document.getElementById("authCard")
+        .classList.remove("hidden");
+    }
+  </script>
+
 </body>
 </html>
- 
