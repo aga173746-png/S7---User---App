@@ -303,10 +303,23 @@ if (currentMode === "login") {
       content.innerHTML = "<h3>💰 Balance</h3><p>৳" +
         (data.balance ?? "0") + "</p>";
     } else if (section === "tasks") {
-      response = await fetch(API_URL + "/api/user/tasks", {
-        headers: { Authorization: "Bearer " + token }
-      });
-      data = await response.json();
+  const taskResponse = await fetch(API_URL + "/api/user/tasks", {
+    headers: { Authorization: "Bearer " + token }
+  });
+  const taskData = await taskResponse.json();
+
+  const settingsResponse = await fetch(API_URL + "/api/payment-settings");
+  const settingsData = await settingsResponse.json();
+  const settings = settingsData.settings || {};
+
+  content.innerHTML = "<h3>📋 Tasks</h3>" +
+    (taskData.tasks || []).map(task =>
+      "<p>" + task.title + " — Reward: ৳" + task.reward + "</p>"
+    ).join("") +
+    "<hr><h3>💳 bKash Payment Details</h3>" +
+    "<p>bKash Number: " + (settings.bkash_number || "এখনো সেট করা হয়নি") + "</p>" +
+    "<p>Payment Amount: ৳" + (settings.payment_amount || "0") + "</p>" +
+    "<p>Instructions: " + (settings.payment_instructions || "কোনো নির্দেশনা নেই") + "</p>";
       content.innerHTML = "<h3>📋 Tasks</h3>" +
         (data.tasks || []).map(task =>
           "<p>" + task.title + " — Reward: ৳" + task.reward + "</p>"
