@@ -320,10 +320,6 @@ if (currentMode === "login") {
     "<p>bKash Number: " + (settings.bkash_number || "এখনো সেট করা হয়নি") + "</p>" +
     "<p>Payment Amount: ৳" + (settings.payment_amount || "0") + "</p>" +
     "<p>Instructions: " + (settings.payment_instructions || "কোনো নির্দেশনা নেই") + "</p>";
-      content.innerHTML = "<h3>📋 Tasks</h3>" +
-        (data.tasks || []).map(task =>
-          "<p>" + task.title + " — Reward: ৳" + task.reward + "</p>"
-        ).join("");
     } else if (section === "wallet") {
       response = await fetch(API_URL + "/api/user/wallet", {
         headers: { Authorization: "Bearer " + token }
