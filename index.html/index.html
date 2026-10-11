@@ -335,10 +335,7 @@ if (currentMode === "login") {
       `;
       return;
     }
-
-    if (!response.ok) {
-      content.textContent = data.error || "তথ্য লোড করা যায়নি";
-    }
+    
   } catch (error) {
     content.textContent =
       "Error: " + error.message;
