@@ -335,7 +335,9 @@ if (currentMode === "login") {
       `;
       return;
     }
-    
+        if (section === "tasks") {
+      return;
+  }
   } catch (error) {
     content.textContent =
       "Error: " + error.message;
