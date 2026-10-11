@@ -344,7 +344,9 @@ if (currentMode === "login") {
       content.textContent = data.error || "তথ্য লোড করা যায়নি";
     }
   } catch (error) {
-    content.textContent = "সার্ভারের সঙ্গে সংযোগ করা যায়নি";
+    content.textContent =
+      "Error: " + error.message;
+    console.error("Tasks/API Error:", error);
   }
 }
 
