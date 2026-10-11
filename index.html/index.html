@@ -280,8 +280,89 @@ if (currentMode === "login") {
     alert("Backend-এর সঙ্গে সংযোগ করা যায়নি");
   }
 });
+  async function openSection(section) {
+  const token = localStorage.getItem("s7_token");
+  const content = document.getElementById("sectionContent");
+
+  if (!token) {
+    alert("আগে Login করুন");
+    return;
+  }
+
+  content.innerHTML = "Loading...";
+
+  try {
+    let response;
+    let data;
+
+    if (section === "balance") {
+      response = await fetch(API_URL + "/api/user/balance", {
+        headers: { Authorization: "Bearer " + token }
+      });
+      data = await response.json();
+      content.innerHTML = "<h3>💰 Balance</h3><p>৳" +
+        (data.balance ?? "0") + "</p>";
+    } else if (section === "tasks") {
+      response = await fetch(API_URL + "/api/user/tasks", {
+        headers: { Authorization: "Bearer " + token }
+      });
+      data = await response.json();
+      content.innerHTML = "<h3>📋 Tasks</h3>" +
+        (data.tasks || []).map(task =>
+          "<p>" + task.title + " — Reward: ৳" + task.reward + "</p>"
+        ).join("");
+    } else if (section === "wallet") {
+      response = await fetch(API_URL + "/api/user/wallet", {
+        headers: { Authorization: "Bearer " + token }
+      });
+      data = await response.json();
+      content.innerHTML = "<h3>👛 Wallet</h3><p>Balance: ৳" +
+        (data.balance ?? "0") + "</p>";
+    } else if (section === "withdraw") {
+      content.innerHTML = `
+        <h3>💳 Withdraw</h3>
+        <input id="withdrawAmount" type="number" min="1" placeholder="Amount">
+        <button onclick="submitWithdraw()">Submit Withdraw</button>
+      `;
+      return;
+    }
+
+    if (!response.ok) {
+      content.textContent = data.error || "তথ্য লোড করা যায়নি";
+    }
+  } catch (error) {
+    content.textContent = "সার্ভারের সঙ্গে সংযোগ করা যায়নি";
+  }
+}
+
+async function submitWithdraw() {
+  const token = localStorage.getItem("s7_token");
+  const amount = Number(document.getElementById("withdrawAmount").value);
+  const content = document.getElementById("sectionContent");
+
+  if (!amount || amount <= 0) {
+    alert("সঠিক Amount দিন");
+    return;
+  }
+
+  try {
+    const response = await fetch(API_URL + "/api/user/withdraw", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      },
+      body: JSON.stringify({ amount })
+    });
+
+    const data = await response.json();
+    alert(data.message || data.error || "Request সম্পন্ন হয়নি");
+    if (response.ok) openSection("wallet");
+  } catch (error) {
+    alert("সার্ভারের সঙ্গে সংযোগ করা যায়নি");
+  }
+}
 </script>
-</body>
   <style>
 .dashboard {
   display: grid;
@@ -320,4 +401,5 @@ if (currentMode === "login") {
 </div>
 
 <div id="sectionContent"></div>
+  </body>
 </html>
